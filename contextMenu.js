@@ -421,7 +421,11 @@
               }
             } else {
               if (leftCoordinate > menuWidth && winWidth - leftCoordinate - padding < menuWidth) {
-                leftCoordinate = winWidth - menuWidth - padding;
+                if(level && level > 0) {
+                  leftCoordinate = leftCoordinate - (1.5 * menuWidth);
+                } else {
+                  leftCoordinate = winWidth - menuWidth - padding;
+                }
               } else if(winWidth - leftCoordinate < menuWidth) {
                 var reduceThresholdX = 5;
                 if(leftCoordinate < reduceThresholdX + padding) {
