@@ -393,7 +393,10 @@
               topCoordinate = event.pageY - menuHeight;
               /// If the element is a nested menu, adds the height of the parent li to the topCoordinate to align with the parent
               if(level && level > 0) {
-                topCoordinate += event.event.currentTarget.offsetHeight;
+                // but not so much that it overflows off the bottom of the window
+                var maxHeight = $document[0].body.clientHeight - $window.scrollY - menuHeight - 20;
+                var adjustedHeight = topCoordinate + event.event.currentTarget.offsetHeight;
+                topCoordinate = Math.min(maxHeight, adjustedHeight);
               }
             } else if(winHeight <= menuHeight) {
               // If it really can't fit, reset the height of the menu to one that will fit
@@ -410,7 +413,7 @@
 
             var leftCoordinate = event.pageX;
             var menuWidth = angular.element($ul[0]).prop('offsetWidth');
-            var winWidth = event.view.innerWidth + window.pageXOffset;
+            var winWidth = event.view.innerWidth + $window.pageXOffset;
             var padding = 5;
 
             if (leftOriented) {
